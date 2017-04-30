@@ -5,7 +5,7 @@ def runtime(f):
         stime = time.time()
         ret = f(*arg)
         etime = time.time()
-        print "runtime of %s: [%s]" % (f.func_name, str(etime - stime))
+        print "runtime of f: [%s]" % (str(etime - stime))
         return ret
     return inner
 
