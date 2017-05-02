@@ -1,12 +1,11 @@
 import time
 
 def runtime(f):
+    stime = time.time()
     def inner(*arg):
-        stime = time.time()
-        ret = f(*arg)
-        etime = time.time()
-        print "runtime of f: [%s]" % (str(etime - stime))
-        return ret
+        return f(*arg)
+    etime = time.time()
+    print "runtime of f: [%s]" % (str(etime - stime))
     return inner
 
 def fxinf(f):
@@ -24,4 +23,22 @@ def listrange(first, last, interval):
             ret.append(i)
     return ret
 
-print listrange(1776, 2017, 4)
+def memoize(f):
+    memo = {}
+    def inner(n):
+        if n not in memo:
+            memo[n] = f(n)
+        return memo[n]
+    return inner
+
+@memoize
+def fib(n):
+    if n < 2:
+        return n
+    else:
+        return fib(n-1) + fib(n-2)
+
+fib = runtime(fib)
+
+#print listrange(1776, 2017, 4)
+print fib(20)
